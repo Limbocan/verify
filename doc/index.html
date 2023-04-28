@@ -2,17 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/doc/favicon.ico" />
+    <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verify</title>
-    <link rel="stylesheet" href="./doc/doc.css" />
+    <link rel="stylesheet" href="./doc.css" />
+    <link rel="stylesheet" href="../lib/style.css" />
   </head>
   <body>
     <div id="app"></div>
     <cyanery-verify></cyanery-verify>
     <button onclick="reRender()">Render</button>
     <script type="module">
-      import Verify from './src/main'
+      import Verify from '../lib/cyanery-verify.js'
 
       const verify = new Verify({
         component: true,

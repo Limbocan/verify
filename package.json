@@ -1,12 +1,40 @@
 {
   "name": "@cyanery/verify",
-  "private": true,
-  "version": "0.0.0",
+  "description": "solidjs verify component",
+  "version": "1.0.0",
   "type": "module",
+  "author": "mocan",
+  "license": "ISC",
+  "main": "./lib/cyanery-verify.iife.js",
+  "module": "./lib/cyanery-verify.js",
+  "types": "./types/index.d.ts",
+  "exports": {
+    "types": "./types/index.d.ts",
+    "import": "./lib/cyanery-verify.js",
+    "require": "./lib/cyanery-verify.umd.cjs"
+  },
+  "files": [
+    "lib",
+    "types"
+  ],
+  "keywords": [
+    "solidjs",
+    "canvas",
+    "verify",
+    "web-component"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview"
+  },
+  "homepage": "https://limbocan.github.io/verify/",
+  "bugs": {
+    "url": "https://github.com/Limbocan/verify/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Limbocan/verify"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.14",
@@ -16,6 +44,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
+    "solid-element": "^1.7.0",
     "solid-js": "^1.7.3"
   }
 }

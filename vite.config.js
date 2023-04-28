@@ -16,7 +16,7 @@ export default defineConfig({
   build: {
     outDir: './lib',
     lib: {
-      entry: './src/main.ts',
+      entry: './src/main.tsx',
       name: 'verify',
       fileName: 'cyanery-verify',
       formats: ['es', 'cjs', 'umd', 'iife'],

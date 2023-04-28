@@ -1,7 +1,10 @@
 import { onMount } from 'solid-js'
 import './style.css'
+import style from './style.css?inline'
 
-const App = () => {
+const App = (
+  { component }: { component: boolean }
+) => {
   let canvasRef = {} as HTMLCanvasElement
 
   onMount(() => {
@@ -14,9 +17,12 @@ const App = () => {
   })
 
   return (
-    <div class="verify-container">
-      <canvas ref={canvasRef}></canvas>
-    </div>
+    <>
+      { component ? <style>{style}</style> : null }
+      <div class="verify-container">
+        <canvas ref={canvasRef}></canvas>
+      </div>
+    </>
   )
 }
 
