@@ -7,22 +7,36 @@
     <title>Verify</title>
     <link rel="stylesheet" href="./doc/doc.css" />
   </head>
-  <body>
+  <body class="verify-body">
     <div id="app"></div>
     <cyanery-verify></cyanery-verify>
-    <button onclick="reRender()">Render</button>
+    <div class="tools-container">
+      <button onclick="picClick()">图片</button>
+      <button onclick="moveClick()">移动</button>
+    </div>
     <script type="module">
       import Verify from './src/main'
 
-      const verify = new Verify({
-        component: true,
-        root: document.querySelector('#app')
+      const verifyComponent = new Verify({
+        component: true, // web-component
       })
 
-      verify.renderVerify()
+      const verifyDom = new Verify({
+        root: document.querySelector('#app'), // dom渲染
+        // width: 1000,
+        // height: 1000,
+      })
 
-      window.reRender = () => {
-        verify.renderVerify()
+      window.picClick = () => {
+        verifyDom.fillImage()
+        verifyComponent.fillImage()
+      }
+
+      let x = 40, y = 40
+      window.moveClick = () => {
+        x++
+        verifyDom.moveClip(x, y)
+        verifyComponent.moveClip(x, y)
       }
     </script>
   </body>

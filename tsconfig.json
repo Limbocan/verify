@@ -15,13 +15,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "noEmit": true,
+    // "noEmit": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "declaration": true,
+    // 只输出 d.ts 文件
+    "emitDeclarationOnly": true,
+    "outDir": "types",
   },
   "include": [
     "src"
-  ]
+, "types/props.d.ts"  ]
 }

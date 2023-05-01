@@ -8,3 +8,10 @@ export interface VerifyProps {
 }
 
 export type ComponentName = string
+
+export interface AppProps {
+  ref: any,
+  component: boolean,
+  width: string | number,
+  height: string | number,
+}
