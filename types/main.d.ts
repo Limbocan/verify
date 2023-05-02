@@ -1,10 +1,14 @@
-import type { VerifyProps } from './props';
+import type { VerifyProps } from '../types/props';
 export declare class Verify {
     #private;
     root: HTMLElement | null | string;
+    appRef: any;
     width: string | number;
     height: string | number;
-    constructor({ component, componentName, root, width, height }: VerifyProps);
-    renderVerify: () => Error | undefined;
+    verifyX: number;
+    verifyY: number;
+    constructor({ component, componentName, root, width, height, verifyX, verifyY, }: VerifyProps);
+    fillImage: () => void;
+    moveClip: (_x: number, _y: number) => void;
 }
 export default Verify;

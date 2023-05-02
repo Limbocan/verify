@@ -2,22 +2,28 @@
 import { getNumber } from './utils'
 
 export const VerifyImage = ({
-  src, width, height, clip = ""
+  src, width, height, repeat = true, clip = ""
 }: {
   src: string,
   width: string | number
   height: string | number
+  repeat?: boolean
   clip?: string
 }) => {
   return (
-    <image
-      href={src}
-      width={getNumber(width)}
-      height={getNumber(height)}
+    <foreignObject
       x={0}
       y={0}
-      preserveAspectRatio={"none meet" as any}
-      clip-path={clip}>
-    </image>
+      width={getNumber(width)}
+      height={getNumber(height)}
+      clip-path={clip}
+    >
+      <div
+        class="verify-background-image"
+        style={
+          `background-image: url(${src});${repeat === false ? 'background-repeat: no-repeat' : ''}`
+        }
+      ></div>
+    </foreignObject>
   )
 }
