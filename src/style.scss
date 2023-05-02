@@ -1,0 +1,29 @@
+.verify-container {
+  position: relative;
+  line-height: 0;
+}
+
+.verify-clip-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.verify-slide-box {
+  height: 30px;
+  width: 100%;
+  background-color: #ccc;
+}
+
+.verify-slide-control {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+
+  &:hover {
+    background-color: #00b8ff;
+  }
+}

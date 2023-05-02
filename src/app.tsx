@@ -1,10 +1,12 @@
-import { onMount } from 'solid-js'
+import { createSignal } from 'solid-js'
 import type { AppProps } from '../types/props'
+import { ClipPathImage } from './clip-path'
+import { VerifySlide } from './verify-slide'
+import { VerifyImage } from './verify-image'
 import { getNumber } from './utils'
-import { ClipCanvas, createMask } from './clip-path'
-import './style.css'
-import style from './style.css?inline'
-import image from './bg.jpg'
+import './style.scss'
+import style from './style.scss?inline'
+import image from './assets/bg.jpg'
 
 const App = (
   {
@@ -12,47 +14,35 @@ const App = (
     component,
     width,
     height,
+    verifyX = 0,
+    verifyY = 0
   }: AppProps
 ) => {
-  // canvasDom
-  let canvasRef = {} as HTMLCanvasElement
-  // canvasContext
-  let ctx = {} as CanvasRenderingContext2D
 
-  onMount(() => {
-    ctx = canvasRef.getContext('2d') as CanvasRenderingContext2D
-    // 填充默认背景
-    ctx.fillStyle = 'cyan'
-    fillImage()
-    createMask(ctx)
-  })
+  let slideRef = {}
 
-  // 填充图像
-  const fillImage = () => {
-    const img = new Image()
-    img.src = image
-    img.onload = () => {
-      ctx.drawImage(img, 0, 0, getNumber(width), getNumber(height))
-    }
-  }
+  const [X, updateX] = createSignal(-verifyX)
 
-  // 移动clip
-  const moveClip = (_x: number, _y: number) => {
-    ctx.fillRect(0, 0, getNumber(width), getNumber(height))
-    // renderClipPath(ctx, 40, x, y)
+  const updatePosition = (x: number) => {
+    updateX(() => x - verifyX)
   }
 
   ref({
-    fillImage,
-    moveClip,
   })
 
   return (
     <>
       { component ? <style>{style}</style> : null }
       <div class="verify-container">
-        <canvas ref={canvasRef} width={width} height={height}></canvas>
-        <ClipCanvas size={40} />
+        <svg width={width} height={height}>
+          <ClipPathImage x={verifyX} y={verifyY} scale={1.5} />
+          <VerifyImage src={image} width={width} height={height} />
+          <rect x={0} width={width} height={height} clip-path="url(#verify-clip-path)" fill="#FFF"></rect>
+          <g transform={`translate(${X()}, 0)`}>
+            <VerifyImage src={image} width={width} height={height} clip="url(#verify-clip-path)" />
+          </g>
+        </svg>
+        <VerifySlide ref={slideRef} width={getNumber(width)} update={updatePosition} />
       </div>
     </>
   )

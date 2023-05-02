@@ -12,6 +12,10 @@ export class Verify {
   width: string | number
   // canvas 高度
   height: string | number
+  // 校验X位置
+  verifyX: number
+  // 校验Y位置
+  verifyY: number
 
   #disposer: any = null
 
@@ -20,11 +24,15 @@ export class Verify {
     componentName = 'cyanery-verify',
     root = null,
     width = 300,
-    height = 200
+    height = 200,
+    verifyX = 200,
+    verifyY = 80,
   } : VerifyProps) {
     this.root = root
     this.width = width
     this.height = height
+    this.verifyX = verifyX
+    this.verifyY = verifyY
     if (component) this.#componentVerify(componentName)
     else this.#renderVerify()
   }
@@ -37,12 +45,7 @@ export class Verify {
     if (this.#disposer) this.#disposer()
 
     this.#disposer = render(
-      () => <App
-        ref={this.appRef}
-        component={false}
-        width={this.width}
-        height={this.height}
-      />,
+      this.#renderVerifyApp,
       this.root as HTMLElement
     )
 
@@ -54,21 +57,27 @@ export class Verify {
     customElement(
       name,
       {},
-      () => <App
-        ref={this.appRef}
-        component={true}
-        width={this.width}
-        height={this.height}
-      />
+      this.#renderVerifyApp
     )
   }
 
-  public fillImage = () => {
-    this.appRef.fillImage()
+  #renderVerifyApp = () => {
+    return (<App
+      ref={this.appRef}
+      component={true}
+      width={this.width}
+      height={this.height}
+      verifyX={this.verifyX}
+      verifyY={this.verifyY}
+    />)
   }
 
-  public moveClip = (x: number, y: number) => {
-    this.appRef.moveClip(x, y)
+  public fillImage = () => {
+    // this.appRef.fillImage()
+  }
+
+  public moveClip = (_x: number, _y: number) => {
+    // this.appRef.moveClip(x, y)
   }
 }
 

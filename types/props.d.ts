@@ -4,14 +4,15 @@ export interface VerifyProps {
   componentName: ComponentName,
   root: HTMLElement | null | string,
   width: string | number,
-  height: string | number
+  height: string | number,
+  verifyX?: number,
+  verifyY?: number,
 }
 
 export type ComponentName = string
 
-export interface AppProps {
+export interface AppProps extends VerifyProps {
   ref: any,
-  component: boolean,
-  width: string | number,
-  height: string | number,
+  componentName?: never,
+  root?: never
 }
