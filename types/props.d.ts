@@ -7,6 +7,7 @@ export interface VerifyProps {
   height: string | number,
   verifyX?: number,
   verifyY?: number,
+  deviation?: number,
 }
 
 export type ComponentName = string

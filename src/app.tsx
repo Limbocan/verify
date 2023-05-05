@@ -15,20 +15,29 @@ const App = (
     width,
     height,
     verifyX = 0,
-    verifyY = 0
+    verifyY = 0,
+    deviation = 10,
   }: AppProps
 ) => {
 
-  let slideRef = {}
+  let slideRef = {} as { resetSlide: () => void }
 
   const [X, updateX] = createSignal(-verifyX)
 
+  // 滑动事件
   const updatePosition = (x: number) => {
     updateX(() => x - verifyX)
   }
 
-  ref({
-  })
+  // 滑动结束时间
+  const verifyEnd = (x: number, _duration: number) => {
+    if (Math.abs(x - verifyX) > deviation) {
+      slideRef.resetSlide()
+      updateX(() => -verifyX)
+    }
+  }
+
+  ref({})
 
   return (
     <>
@@ -46,7 +55,7 @@ const App = (
             <VerifyImage src={image} width={width} height={height} clip="url(#verify-clip-path)" />
           </g>
         </svg>
-        <VerifySlide ref={slideRef} width={getNumber(width)} update={updatePosition} />
+        <VerifySlide ref={slideRef} width={getNumber(width)} update={updatePosition} end={verifyEnd} />
       </div>
     </>
   )

@@ -8,14 +8,16 @@ export class Verify {
   root: HTMLElement | null | string
   // App
   appRef: any
-  // canvas宽度
+  // 宽度
   width: string | number
-  // canvas 高度
+  // 高度
   height: string | number
   // 校验X位置
   verifyX: number
   // 校验Y位置
   verifyY: number
+  // 校验偏差值
+  deviation: number
 
   #disposer: any = null
 
@@ -27,12 +29,14 @@ export class Verify {
     height = 200,
     verifyX = 200,
     verifyY = 80,
+    deviation = 10,
   } : VerifyProps) {
     this.root = root
     this.width = width
     this.height = height
     this.verifyX = verifyX
     this.verifyY = verifyY
+    this.deviation = deviation
     if (component) this.#componentVerify(componentName)
     else this.#renderVerify()
   }
