@@ -11,7 +11,8 @@ export const VerifySlide = (
   }
 ) => {
 
-  let slideRef = {} as any,
+  let slidBoxRef = {} as HTMLDivElement,
+    slideRef = {} as any,
     duration = 0 as number, startTime = 0 as number,
     [slideWidth, updateSlideWidth] = createSignal(0),
     [startX, updateStartX] = createSignal(0),
@@ -37,6 +38,7 @@ export const VerifySlide = (
     duration = new Date().getTime() - startTime
     startTime = 0
     const _distance = getDistance(e)
+    slidBoxRef.classList.remove('verify-slide-active')
     end(_distance, duration)
   }
 
@@ -44,6 +46,7 @@ export const VerifySlide = (
   const slideStart = (e: MouseEvent) => {
     startTime = new Date().getTime()
     if (isFirst()) updateStartX(() => e.screenX)
+    slidBoxRef.classList.add('verify-slide-active')
     window.addEventListener('mouseup', slideEnd)
     window.addEventListener('mousemove', slideMove)
   }
@@ -66,7 +69,7 @@ export const VerifySlide = (
   ref({ resetSlide })
 
   return (
-    <div class="verify-slide-box">
+    <div ref={slidBoxRef} class="verify-slide-box" style={ {'--verify-slide-box-width': width + 'px'} }>
       <div
         ref={slideRef}
         class="verify-slide-control"

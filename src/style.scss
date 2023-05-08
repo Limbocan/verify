@@ -2,6 +2,7 @@
   position: relative;
   line-height: 0;
   overflow: hidden;
+  user-select: none;
 
   .verify-background-image {
     width: 100%;
@@ -10,7 +11,7 @@
 
   .verify-slide-box {
     height: 30px;
-    width: 100%;
+    width: var(--verify-slide-box-width);
     background-color: #ccc;
   
     .verify-slide-control {

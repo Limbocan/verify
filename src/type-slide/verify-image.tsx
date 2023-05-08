@@ -1,5 +1,5 @@
 
-import { getNumber } from './utils'
+import { getNumber } from '../utils'
 
 export const VerifyImage = ({
   src, width, height, repeat = true, clip = ""
