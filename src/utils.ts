@@ -15,10 +15,11 @@ export const getElement = (el: HTMLElement | string | undefined) => isElement(el
  * @param value number | string
  * @returns number
  */
-export const getNumber = (value: number | string, def_num: number = 0): number => {
+export const getNumber = (value: number | string | undefined, def_num: number = 0): number => {
   if (typeof value === 'number') return value
   else {
-    const number = Number(value.replace(/[^0-9.]/g, ''))
+    const _val = [undefined, 0, '0', 'false'].includes(value) ? '0' as string : value as string
+    const number = Number(_val.replace(/[^0-9.]/g, ''))
     return isNaN(number) ? def_num : number
   }
 }

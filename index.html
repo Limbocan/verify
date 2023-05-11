@@ -11,14 +11,14 @@
     <div id="app"></div>
     <cyanery-verify></cyanery-verify>
     <div class="tools-container">
-      <button onclick="picClick()">图片</button>
-      <button onclick="moveClick()">移动</button>
+      <button onclick="updateSlide()">移动</button>
     </div>
     <script type="module">
       import Verify from './src/main'
 
       const verifyComponent = new Verify({
         component: true, // web-component
+        trigger: 'hover'
       })
 
       const verifyDom = new Verify({
@@ -27,16 +27,13 @@
         // height: 1000,
       })
 
-      window.picClick = () => {
-        verifyDom.fillImage()
-        verifyComponent.fillImage()
-      }
-
       let x = 40, y = 40
-      window.moveClick = () => {
+      window.updateSlide = () => {
         x++
-        verifyDom.moveClip(x, y)
-        verifyComponent.moveClip(x, y)
+        verifyDom.updateSlide({
+          // width: 200, height: 100,
+          verifyX: x, verifyY: y
+        })
       }
     </script>
   </body>

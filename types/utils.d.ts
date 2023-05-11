@@ -12,4 +12,4 @@ export declare const getElement: (el: HTMLElement | string | undefined) => strin
  * @param value number | string
  * @returns number
  */
-export declare const getNumber: (value: number | string, def_num?: number) => number;
+export declare const getNumber: (value: number | string | undefined, def_num?: number) => number;

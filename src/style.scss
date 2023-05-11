@@ -1,7 +1,6 @@
 .verify-container {
   position: relative;
   line-height: 0;
-  overflow: hidden;
   user-select: none;
 
   .verify-background-image {
@@ -10,7 +9,7 @@
   }
 
   .verify-slide-box {
-    height: 30px;
+    position: relative;
     width: var(--verify-slide-box-width);
     background-color: #ccc;
   
@@ -24,6 +23,26 @@
     
       &:hover, &:focus, &:active {
         background-color: #00b8ff;
+      }
+    }
+
+    &.verify-slide-box-hover {
+      height: 30px;
+
+      .verify-slide-svg {
+        position: absolute;
+        top: 0;
+        opacity: 0;
+        height: 0;
+        transition: top .3s ease-in-out, opacity .3s ease-in-out, height .3s ease-in-out;
+      }
+
+      &.verify-slide-box-hover-active {
+        .verify-slide-svg {
+          top: calc(var(--verify-slide-svg-height) * -1);
+          height: var(--verify-slide-svg-height);
+          opacity: 1;
+        }
       }
     }
   }
