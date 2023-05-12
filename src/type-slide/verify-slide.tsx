@@ -7,7 +7,7 @@ export const VerifySlide = (props: {
   width: number,
   height: number,
   update: (x: number) => void,
-  end: (x: number, d: number) => void,
+  end: (x: number, d: number) => Promise<boolean>,
   trigger: TriggerType | undefined,
   children: any
 }) => {
@@ -24,13 +24,13 @@ export const VerifySlide = (props: {
   onMount(() => {
     updateSlideWidth(() => slideRef ? slideRef.getBoundingClientRect().width : 0)
 
-    slidBoxRef.addEventListener('mouseenter', () => {
-      slidBoxRef.classList.add('verify-slide-box-hover-active')
-    })
-    slidBoxRef.addEventListener('mouseleave', () => {
-      if (startTime === 0) slidBoxRef.classList.remove('verify-slide-box-hover-active')
-    })
+    slidBoxRef.addEventListener('mouseenter', showBox)
+    slidBoxRef.addEventListener('mouseleave', hiddenBox)
   })
+
+  // trigger为hover时显示/隐藏box
+  const showBox = () => slidBoxRef.classList.add('verify-slide-box-hover-active')
+  const hiddenBox = () => { if (startTime === 0) slidBoxRef.classList.remove('verify-slide-box-hover-active') }
 
   // 滑动中事件
   const slideMove = (e: MouseEvent) => {
@@ -45,11 +45,13 @@ export const VerifySlide = (props: {
     window.removeEventListener('mouseup', slideEnd)
     window.removeEventListener('mousemove', slideMove)
     duration = new Date().getTime() - startTime
-    startTime = 0
-    const _distance = getDistance(e)
-    _props.end(_distance, duration)
-    slidBoxRef.classList.remove('verify-slide-box-slide-active')
-    slidBoxRef.classList.remove('verify-slide-box-hover-active')
+    const result = _props.end(getDistance(e), duration)
+    result.then((e) => {
+      if (!e) return
+      startTime = 0
+      slidBoxRef.classList.remove('verify-slide-box-slide-active')
+      slidBoxRef.classList.remove('verify-slide-box-hover-active')
+    })
   }
 
   // 滑动开始事件

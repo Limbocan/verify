@@ -4,7 +4,6 @@ import { VerifySlide } from './verify-slide'
 import { VerifyImage } from './verify-image'
 import { getNumber } from '../utils'
 import type { AppProps } from '../../types/props'
-import image from '../assets/verify.png'
 
 export const TypeSlide = (props: { props: AppProps }) => {
 
@@ -13,7 +12,7 @@ export const TypeSlide = (props: { props: AppProps }) => {
   const getVerifyX = () => getNumber(_props.props.verifyX)
   const getVerifyY = () => getNumber(_props.props.verifyY)
 
-  let slideRef = {} as { resetSlide: () => void }
+  let slideRef = {} as { resetSlide: () => void, slideEndAfter: () => void }
   const [X, updateX] = createSignal(-getVerifyX())
 
   createEffect(() => {
@@ -25,12 +24,21 @@ export const TypeSlide = (props: { props: AppProps }) => {
     updateX(() => x - getVerifyX())
   }
 
-  // 滑动结束时间
-  const verifyEnd = (x: number, _duration: number) => {
-    if (Math.abs(x - getVerifyX()) > getNumber(_props.props.deviation)) {
-      slideRef.resetSlide()
-      updateX(() => -getVerifyX())
+  // 滑动结束事件
+  const verifyEnd = (x: number, duration: number): Promise<boolean> => {
+    const margin = Math.abs(x - getVerifyX())
+    const nextFn = async () => {
+      if (margin > getNumber(_props.props.deviation)) {
+        slideRef.resetSlide()
+        updateX(() => -getVerifyX())
+      }
+      return true
     }
+    if (_props.props.verifyEnd instanceof Function) {
+      _props.props.verifyEnd(nextFn, margin, duration)
+      return Promise.resolve(false)
+    } else return nextFn()
+
   }
 
   return (
@@ -56,7 +64,7 @@ export const TypeSlide = (props: { props: AppProps }) => {
           />
           {/* 背景图 */}
           <VerifyImage
-            src={image}
+            src={_props.props.image}
             width={_props.props.width}
             height={_props.props.height}
           />
@@ -74,7 +82,7 @@ export const TypeSlide = (props: { props: AppProps }) => {
             filter="url(#verify-clip-filter)"
           >
             <VerifyImage
-              src={image}
+              src={_props.props.image}
               width={_props.props.width}
               height={_props.props.height}
               clip="url(#verify-clip-path)"

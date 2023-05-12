@@ -2,7 +2,7 @@ import { createSignal, Signal } from 'solid-js'
 import { render } from 'solid-js/web'
 import { customElement } from 'solid-element'
 import { TriggerType } from '../types/props.d'
-import type { VerifyProps, ComponentName } from '../types/props'
+import type { VerifyProps, verifyEnd, ComponentName } from '../types/props'
 import App from './app'
 
 // 参数列表以及默认参数
@@ -10,6 +10,7 @@ const PROP_LIST = {
   root: null,
   width: 300,
   height: 200,
+  image: '',
   component: false,
   componentName: 'cyanery-verify',
   verifyX: 200,
@@ -30,6 +31,8 @@ export class Verify {
   width!: Signal<number>[0]
   // 高度
   height!: Signal<number>[0]
+  // 背景图片
+  image!: Signal<string>[0]
   // 校验X位置
   verifyX!: Signal<number>[0]
   // 校验Y位置
@@ -38,6 +41,8 @@ export class Verify {
   deviation!: Signal<number>[0]
   // 触发方式
   trigger!: Signal<TriggerType>[0]
+  // 校验结束拦截方法
+  verifyEnd!: verifyEnd | undefined
 
   // AppRef
   #appRef: any
@@ -50,6 +55,7 @@ export class Verify {
       _prop = props[key] !== undefined ? props[key] : PROP_LIST[key];
       [this[key], this[`update_${key}`]] = createSignal(_prop)
     })
+    this.verifyEnd = props.verifyEnd
     if (this.component()) this.#componentVerify(this.componentName())
     else this.#renderVerify()
   }
@@ -84,19 +90,27 @@ export class Verify {
       component={true}
       width={this.width()}
       height={this.height()}
+      image={this.image()}
       verifyX={this.verifyX()}
       verifyY={this.verifyY()}
       deviation={this.deviation()}
       trigger={this.trigger()}
+      verifyEnd={this.verifyEnd}
     />)
   }
 
-  public updateSlide = (props: { verifyX: number, verifyY: number }) => {
-    // this.verifyX = props.verifyX
-    // this.verifyY = props.verifyY
-    this.update_verifyX(() => props.verifyX)
-    this.update_verifyY(props.verifyY)
-    // this.#appRef.updateSlide(props)
+  public updateSlide = (props: {
+    verifyX: number,
+    verifyY: number,
+    width: number,
+    height: number,
+    image: string,
+  }) => {
+    this.update_verifyX(() => props.verifyX || this.verifyX())
+    this.update_verifyY(() => props.verifyY || this.verifyY())
+    this.update_width(() => props.width || this.width())
+    this.update_height(() => props.height || this.height())
+    this.update_image(() => props.image || this.image())
   }
 }
 

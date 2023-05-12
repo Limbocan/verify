@@ -9,6 +9,7 @@ export declare class Verify {
     componentName: Signal<string>[0];
     width: Signal<number>[0];
     height: Signal<number>[0];
+    image: Signal<string>[0];
     verifyX: Signal<number>[0];
     verifyY: Signal<number>[0];
     deviation: Signal<number>[0];
@@ -17,7 +18,9 @@ export declare class Verify {
     updateSlide: (props: {
         verifyX: number;
         verifyY: number;
+        width: number;
+        height: number;
+        image: string;
     }) => void;
-    resetSlide: () => void;
 }
 export default Verify;

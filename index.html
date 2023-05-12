@@ -18,11 +18,19 @@
 
       const verifyComponent = new Verify({
         component: true, // web-component
-        trigger: 'hover'
+        image: './doc/verify.png',
+        trigger: 'hover',
+        verifyEnd: (next, distance, duration) => {
+          console.log(distance, duration, '====')
+          setTimeout(() => {
+            next()
+          }, 1000)
+        }
       })
 
       const verifyDom = new Verify({
         root: document.querySelector('#app'), // dom渲染
+        image: './doc/verify.png'
         // width: 1000,
         // height: 1000,
       })
