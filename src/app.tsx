@@ -11,12 +11,10 @@ const App = (
   const _props = mergeProps(props)
   let slideTypeRef = {} as any
 
-  _props.ref({})
-
   return (
     <>
       { _props.component ? <style>{style}</style> : null }
-      <div class="verify-container">
+      <div class={`verify-container ${(_props.loading || _props.disabled) ? 'verify-container-disabled' : ''}`}>
         <TypeSlide
           ref={slideTypeRef}
           props={_props}

@@ -6,24 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Verify</title>
     <link rel="stylesheet" href="./doc.css" />
-    <link rel="stylesheet" href="../lib/style.css" />
   </head>
   <body class="verify-body">
     <div id="app"></div>
-    <cyanery-verify></cyanery-verify>
-    <button onclick="reRender()">Render</button>
+    <cyanery-verify>
+      <span slot="label">使用插槽文字</span>
+    </cyanery-verify>
+    <div class="tools-container">
+      <button onclick="updateSlide()">移动</button>
+    </div>
     <script type="module">
       import Verify from '../lib/cyanery-verify.js'
 
-      const verify = new Verify({
-        component: true,
-        root: document.querySelector('#app')
+      const verifyComponent = new Verify({
+        component: true, // web-component
+        image: './verify.png',
+        trigger: 'hover',
+        verifyEnd: (next, distance, duration) => {
+          verifyComponent.setLoading(true)
+          setTimeout(() => {
+            const result = distance > 5
+            verifyComponent.setLoading(false)
+            next(result)
+          }, 1000)
+        }
       })
 
-      verify.renderVerify()
+      const verifyDom = new Verify({
+        root: document.querySelector('#app'), // dom渲染
+        image: './verify.png',
+        slideLabel: '自定义文字'
+        // width: 1000,
+        // height: 1000,
+      })
 
-      window.reRender = () => {
-        verify.renderVerify()
+      window.updateSlide = () => {
+        verifyDom.updateSlide({
+          width: 400, height: 300,
+          verifyX: 300, verifyY: 50, scale: 1.6
+        })
       }
     </script>
   </body>

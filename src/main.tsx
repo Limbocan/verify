@@ -12,6 +12,7 @@ const PROP_LIST = {
   height: 200,
   image: '',
   loading: false,
+  disabled: false,
   component: false,
   componentName: 'cyanery-verify',
   verifyX: 200,
@@ -38,6 +39,8 @@ export class Verify {
   image!: Signal<string>[0]
   // loading
   loading!: Signal<boolean>[0]
+  // disabled
+  disabled!: Signal<boolean>[0]
   // 校验X位置
   verifyX!: Signal<number>[0]
   // 校验Y位置
@@ -52,7 +55,6 @@ export class Verify {
   trigger!: Signal<TriggerType>[0]
   // 校验结束拦截方法
   verifyEnd!: verifyEnd | undefined
-
   // AppRef
   #appRef: any
   // AppInstance
@@ -101,6 +103,7 @@ export class Verify {
       height={this.height()}
       image={this.image()}
       loading={this.loading()}
+      disabled={this.disabled()}
       verifyX={this.verifyX()}
       verifyY={this.verifyY()}
       slideLabel={this.slideLabel()}
@@ -111,6 +114,7 @@ export class Verify {
     />)
   }
 
+  // 更新状态
   public updateSlide = (props: {
     verifyX: number,
     verifyY: number,
@@ -135,6 +139,11 @@ export class Verify {
   // 设置loading
   public setLabel = (label: string) => {
     this.update_slideLabel(() => label)
+  }
+
+  // 重置状态
+  public resetSlide = () => {
+    this.#appRef.resetSlide()
   }
 }
 

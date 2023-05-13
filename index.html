@@ -14,6 +14,7 @@
     </cyanery-verify>
     <div class="tools-container">
       <button onclick="updateSlide()">移动</button>
+      <button onclick="resetSlide()">重置</button>
     </div>
     <script type="module">
       import Verify from './src/main'
@@ -25,8 +26,9 @@
         verifyEnd: (next, distance, duration) => {
           verifyComponent.setLoading(true)
           setTimeout(() => {
+            const result = distance > 5
             verifyComponent.setLoading(false)
-            next(true)
+            next(result)
           }, 1000)
         }
       })
@@ -34,9 +36,15 @@
       const verifyDom = new Verify({
         root: document.querySelector('#app'), // dom渲染
         image: './doc/verify.png',
-        slideLabel: '自定义文字'
-        // width: 1000,
-        // height: 1000,
+        slideLabel: '自定义文字',
+        verifyEnd: (next, distance, duration) => {
+          verifyDom.setLoading(true)
+          setTimeout(() => {
+            const result = distance > 5
+            verifyDom.setLoading(false)
+            next(result)
+          }, 1000)
+        }
       })
 
       window.updateSlide = () => {
@@ -44,6 +52,10 @@
           width: 400, height: 300,
           verifyX: 300, verifyY: 50, scale: 1.6
         })
+      }
+
+      window.resetSlide = () => {
+        verifyDom.resetSlide()
       }
     </script>
   </body>

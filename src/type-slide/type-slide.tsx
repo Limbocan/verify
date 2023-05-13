@@ -32,7 +32,7 @@ export const TypeSlide = (props: { props: AppProps }) => {
   const verifyEnd = (x: number, duration: number): void => {
     const margin = Math.abs(x - getVerifyX())
     const isFaile = margin > getNumber(_props.props.deviation)
-    if (isFaile) slideRef.setSlideBoxClass('add', 'verify-slide-faile')
+    if (isFaile) slideRef.setSlideBoxClass('add', 'verify-slide-failed')
     else slideRef.setSlideBoxClass('add', 'verify-slide-success')
     const nextFn = (reset: boolean = true) => {
       if (isFaile && reset) {
@@ -47,6 +47,13 @@ export const TypeSlide = (props: { props: AppProps }) => {
 
   }
 
+  _props.props.ref({
+    resetSlide: () => {
+      slideRef.resetSlide()
+      animateX(_props.props.width, X, updateX, -getVerifyX())
+    }
+  })
+
   return (
     <VerifySlide
       ref={slideRef}
@@ -54,6 +61,8 @@ export const TypeSlide = (props: { props: AppProps }) => {
       height={_props.props.height}
       update={updatePosition}
       end={verifyEnd}
+      loading={_props.props.loading}
+      disabled={_props.props.disabled}
       slideLabel={_props.props.slideLabel}
       trigger={_props.props.trigger}
     >

@@ -9,6 +9,7 @@ export interface VerifyProps {
   height: number,
   image: string,
   loading: boolean,
+  disabled: boolean,
   verifyX?: number,
   verifyY?: number,
   slideScale: number,

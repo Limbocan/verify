@@ -3,11 +3,16 @@
   --verify-slide-control-color: #fff; // 滑块颜色
   --verify-slide-control-active-color: #257ce6e1; // 滑块活跃颜色
   --verify-success-color: rgba(65, 216, 85, 0.795);
-  --verify-faile-color: rgba(216, 65, 65, 0.795);
+  --verify-failed-color: rgba(216, 65, 65, 0.795);
 
   position: relative;
   line-height: 0;
   user-select: none;
+
+  &.verify-container-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 
   .verify-background-image {
     width: 100%;
@@ -63,6 +68,11 @@
     
       &:hover, &:focus, &:active {
         background-color: var(--verify-slide-control-active-color);
+
+        .verify-slide-control-icon {
+          fill: #fff;
+          transition: fill .2s ease-in-out;
+        }
       }
 
       &::before {
@@ -75,6 +85,19 @@
           inset 0 -1px var(--verify-slide-control-active-color),
           inset 0 1px var(--verify-slide-control-active-color);
         // background-color: var(--verify-slide-control-color);
+      }
+
+      .verify-slide-control-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        fill: var(--verify-slide-control-active-color);
+        transition: fill .2s ease-in, opacity .2s ease-in-out;
+      }
+
+      .verify-slide-control-success, .verify-slide-control-failed {
+        opacity: 0;
       }
     }
 
@@ -109,17 +132,31 @@
             inset 0 -1px var(--verify-success-color),
             inset 0 1px var(--verify-success-color);
         }
+        .verify-slide-control-normal, .verify-slide-control-failed {
+          opacity: 0;
+        }
+        .verify-slide-control-success {
+          opacity: 1;
+          fill: #fff;
+        }
       }
     }
 
     // 校验失败样式
-    &.verify-slide-faile {
+    &.verify-slide-failed {
       .verify-slide-control {
-        background-color: var(--verify-faile-color);
+        background-color: var(--verify-failed-color);
         &::before {
-          box-shadow: inset 1px 0 var(--verify-faile-color),
-            inset 0 -1px var(--verify-faile-color),
-            inset 0 1px var(--verify-faile-color);
+          box-shadow: inset 1px 0 var(--verify-failed-color),
+            inset 0 -1px var(--verify-failed-color),
+            inset 0 1px var(--verify-failed-color);
+        }
+        .verify-slide-control-normal, .verify-slide-control-success {
+          opacity: 0;
+        }
+        .verify-slide-control-failed {
+          opacity: 1;
+          fill: #fff;
         }
       }
     }

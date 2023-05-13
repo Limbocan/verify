@@ -11,9 +11,11 @@ export declare class Verify {
     height: Signal<number>[0];
     image: Signal<string>[0];
     loading: Signal<boolean>[0];
+    disabled: Signal<boolean>[0];
     verifyX: Signal<number>[0];
     verifyY: Signal<number>[0];
     slideLabel: Signal<string>[0];
+    slideScale: Signal<number>[0];
     deviation: Signal<number>[0];
     trigger: Signal<TriggerType>[0];
     verifyEnd: verifyEnd | undefined;
@@ -24,8 +26,10 @@ export declare class Verify {
         width: number;
         height: number;
         image: string;
+        scale: number;
     }) => void;
     setLoading: (loading: boolean) => void;
     setLabel: (label: string) => void;
+    resetSlide: () => void;
 }
 export default Verify;
