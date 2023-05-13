@@ -6,5 +6,6 @@ export declare const VerifySlide: (props: {
     update: (x: number) => void;
     end: (x: number, d: number) => void;
     trigger: TriggerType | undefined;
+    slideLabel: string;
     children: any;
 }) => import("solid-js").JSX.Element;

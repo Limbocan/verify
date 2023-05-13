@@ -1,14 +1,16 @@
 
 import { TriggerType } from '../../types/props.d'
 import { mergeProps, createSignal, onMount } from 'solid-js'
+import { animateX } from '../utils'
 
 export const VerifySlide = (props: {
   ref: any,
   width: number,
   height: number,
   update: (x: number) => void,
-  end: (x: number, d: number) => Promise<boolean>,
+  end: (x: number, d: number) => void,
   trigger: TriggerType | undefined,
+  slideLabel: string,
   children: any
 }) => {
   const _props = mergeProps(props)
@@ -45,13 +47,15 @@ export const VerifySlide = (props: {
     window.removeEventListener('mouseup', slideEnd)
     window.removeEventListener('mousemove', slideMove)
     duration = new Date().getTime() - startTime
-    const result = _props.end(getDistance(e), duration)
-    result.then((e) => {
-      if (!e) return
-      startTime = 0
-      slidBoxRef.classList.remove('verify-slide-box-slide-active')
-      slidBoxRef.classList.remove('verify-slide-box-hover-active')
-    })
+    _props.end(getDistance(e), duration)
+  }
+
+  // 滑动结束后还原状态
+  const slideEndAfter = (reset: boolean = true): void => {
+    if (!reset) return
+    startTime = 0
+    slidBoxRef.classList.remove('verify-slide-box-slide-active')
+    slidBoxRef.classList.remove('verify-slide-box-hover-active')
   }
 
   // 滑动开始事件
@@ -71,14 +75,26 @@ export const VerifySlide = (props: {
     return _distance
   }
 
+  // 设置box样式class
+  const setSlideBoxClass = (method: number | string = 'add', className: string) => {
+    if (method === 'add') slidBoxRef.classList.add(className)
+    else if (method === 'remove') slidBoxRef.classList.remove(className)
+  }
+
+  let timeout = null as any
   // 重置状态
   const resetSlide = () => {
+    timeout = setTimeout(() => {
+      setSlideBoxClass('remove', 'verify-slide-faile')
+      setSlideBoxClass('remove', 'verify-slide-success')
+      timeout = null
+    }, 300) as any
     updateStartX(() => 0)
-    updateActiveX(() => 0)
+    animateX(_props.width, activeX, updateActiveX)
     updateIsFirst(() => true)
   }
 
-  _props.ref({ resetSlide })
+  _props.ref({ resetSlide, slideEndAfter, setSlideBoxClass })
 
   return (
     <div
@@ -94,8 +110,13 @@ export const VerifySlide = (props: {
         ref={slideRef}
         class="verify-slide-control"
         onmousedown={slideStart}
-        style={`transform: translate(${activeX()}px, 0)`}
+        style={`--verify-slide-control-x: ${activeX()}px`}
       ></div>
+      <div class="verify-slide-label">
+        <slot name="label">
+          { _props.slideLabel }
+        </slot>
+      </div>
     </div>
   )
 

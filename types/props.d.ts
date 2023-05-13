@@ -8,14 +8,17 @@ export interface VerifyProps {
   width: number,
   height: number,
   image: string,
+  loading: boolean,
   verifyX?: number,
   verifyY?: number,
+  slideScale: number,
+  slideLabel: string,
   deviation?: number,
   trigger?: TriggerType | undefined,
   verifyEnd?: verifyEnd | undefined,
 }
 
-export type verifyEnd = (next: () => void, distance: number, duration: number) => boolean
+export type verifyEnd = (next: (reset: boolean) => void, distance: number, duration: number) => boolean
 
 export type ComponentName = string
 

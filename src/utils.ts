@@ -23,3 +23,17 @@ export const getNumber = (value: number | string | undefined, def_num: number = 
     return isNaN(number) ? def_num : number
   }
 }
+
+
+export const animateX = (width: number, x: any, update: any, end: number = 0) => {
+  const step = width / 20
+  const position = x()
+  if ((position - step) < end) {
+    update(() => end)
+    return
+  }
+  window.requestAnimationFrame(() => {
+    update(() => position - step)
+    animateX(width, x, update, end)
+  })
+}

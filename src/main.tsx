@@ -11,10 +11,13 @@ const PROP_LIST = {
   width: 300,
   height: 200,
   image: '',
+  loading: false,
   component: false,
   componentName: 'cyanery-verify',
   verifyX: 200,
   verifyY: 80,
+  slideLabel: '向右拖动滑块',
+  slideScale: 1.4,
   deviation: 5,
   trigger: TriggerType.insert,
 } as VerifyProps
@@ -33,10 +36,16 @@ export class Verify {
   height!: Signal<number>[0]
   // 背景图片
   image!: Signal<string>[0]
+  // loading
+  loading!: Signal<boolean>[0]
   // 校验X位置
   verifyX!: Signal<number>[0]
   // 校验Y位置
   verifyY!: Signal<number>[0]
+  // 滑动校验文字
+  slideLabel!: Signal<string>[0]
+  // 裁剪区域缩放比例
+  slideScale!: Signal<number>[0]
   // 校验偏差值
   deviation!: Signal<number>[0]
   // 触发方式
@@ -91,8 +100,11 @@ export class Verify {
       width={this.width()}
       height={this.height()}
       image={this.image()}
+      loading={this.loading()}
       verifyX={this.verifyX()}
       verifyY={this.verifyY()}
+      slideLabel={this.slideLabel()}
+      slideScale={this.slideScale()}
       deviation={this.deviation()}
       trigger={this.trigger()}
       verifyEnd={this.verifyEnd}
@@ -105,12 +117,24 @@ export class Verify {
     width: number,
     height: number,
     image: string,
+    scale: number,
   }) => {
     this.update_verifyX(() => props.verifyX || this.verifyX())
     this.update_verifyY(() => props.verifyY || this.verifyY())
     this.update_width(() => props.width || this.width())
     this.update_height(() => props.height || this.height())
     this.update_image(() => props.image || this.image())
+    this.update_slideScale(() => props.scale || this.slideScale())
+  }
+
+  // 设置loading
+  public setLoading = (loading: boolean) => {
+    this.update_loading(() => loading)
+  }
+
+  // 设置loading
+  public setLabel = (label: string) => {
+    this.update_slideLabel(() => label)
   }
 }
 

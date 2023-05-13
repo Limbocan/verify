@@ -9,7 +9,9 @@
   </head>
   <body class="verify-body">
     <div id="app"></div>
-    <cyanery-verify></cyanery-verify>
+    <cyanery-verify>
+      <span slot="label">使用插槽文字</span>
+    </cyanery-verify>
     <div class="tools-container">
       <button onclick="updateSlide()">移动</button>
     </div>
@@ -21,26 +23,26 @@
         image: './doc/verify.png',
         trigger: 'hover',
         verifyEnd: (next, distance, duration) => {
-          console.log(distance, duration, '====')
+          verifyComponent.setLoading(true)
           setTimeout(() => {
-            next()
+            verifyComponent.setLoading(false)
+            next(true)
           }, 1000)
         }
       })
 
       const verifyDom = new Verify({
         root: document.querySelector('#app'), // dom渲染
-        image: './doc/verify.png'
+        image: './doc/verify.png',
+        slideLabel: '自定义文字'
         // width: 1000,
         // height: 1000,
       })
 
-      let x = 40, y = 40
       window.updateSlide = () => {
-        x++
         verifyDom.updateSlide({
-          // width: 200, height: 100,
-          verifyX: x, verifyY: y
+          width: 400, height: 300,
+          verifyX: 300, verifyY: 50, scale: 1.6
         })
       }
     </script>

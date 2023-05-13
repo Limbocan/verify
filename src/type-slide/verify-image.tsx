@@ -1,27 +1,30 @@
-
+import { mergeProps } from 'solid-js'
 import { getNumber } from '../utils'
 
-export const VerifyImage = ({
-  src, width, height, repeat = true, clip = ""
-}: {
+export const VerifyImage = (
+  props : {
   src: string,
   width: string | number
   height: string | number
   repeat?: boolean
   clip?: string
-}) => {
+  loading?: boolean
+  }) => {
+  
+  const _props = mergeProps(props)
+
   return (
     <foreignObject
       x={0}
       y={0}
-      width={getNumber(width)}
-      height={getNumber(height)}
-      clip-path={clip}
+      width={getNumber(_props.width)}
+      height={getNumber(_props.height)}
+      clip-path={_props.clip}
     >
       <div
-        class="verify-background-image"
+        class={`verify-background-image ${_props.loading === true ? 'verify-image-loading' : ''} ${_props.clip ? 'verify-image-clip' : ''}`}
         style={
-          `background-image: url(${src});${repeat === false ? 'background-repeat: no-repeat' : ''}`
+          `background-image: url(${_props.src});${_props.repeat === false ? 'background-repeat: no-repeat' : ''}`
         }
       ></div>
     </foreignObject>
