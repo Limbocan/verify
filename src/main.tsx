@@ -1,7 +1,7 @@
 import { createSignal, Signal } from 'solid-js'
 import { render } from 'solid-js/web'
 import { customElement } from 'solid-element'
-import { TriggerType } from '../types/props.d'
+import { VerifyType, TriggerType } from '../types/props.d'
 import type { VerifyProps, verifyEnd, ComponentName } from '../types/props'
 import App from './app'
 
@@ -15,9 +15,11 @@ const PROP_LIST = {
   disabled: false,
   component: false,
   componentName: 'cyanery-verify',
+  type: VerifyType.slide,
   verifyX: 200,
   verifyY: 80,
   slideLabel: '向右拖动滑块',
+  checkLabel: '点击进行验证',
   slideScale: 1.4,
   deviation: 5,
   trigger: TriggerType.insert,
@@ -37,6 +39,8 @@ export class Verify {
   height!: Signal<number>[0]
   // 背景图片
   image!: Signal<string>[0]
+  // 校验类型
+  type!: Signal<VerifyType>[0]
   // loading
   loading!: Signal<boolean>[0]
   // disabled
@@ -49,6 +53,8 @@ export class Verify {
   slideLabel!: Signal<string>[0]
   // 裁剪区域缩放比例
   slideScale!: Signal<number>[0]
+  // check文字提示
+  checkLabel!: Signal<string>[0]
   // 校验偏差值
   deviation!: Signal<number>[0]
   // 触发方式
@@ -102,12 +108,14 @@ export class Verify {
       width={this.width()}
       height={this.height()}
       image={this.image()}
+      type={this.type()}
       loading={this.loading()}
       disabled={this.disabled()}
       verifyX={this.verifyX()}
       verifyY={this.verifyY()}
       slideLabel={this.slideLabel()}
       slideScale={this.slideScale()}
+      checkLabel={this.checkLabel()}
       deviation={this.deviation()}
       trigger={this.trigger()}
       verifyEnd={this.verifyEnd}
@@ -136,7 +144,7 @@ export class Verify {
     this.update_loading(() => loading)
   }
 
-  // 设置loading
+  // 设置滑动Label
   public setLabel = (label: string) => {
     this.update_slideLabel(() => label)
   }

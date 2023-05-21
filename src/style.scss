@@ -1,5 +1,5 @@
 .verify-container {
-  --slide-control-size: 30px;
+  --verify-control-size: 30px;
   --verify-slide-control-color: #fff; // 滑块颜色
   --verify-slide-control-active-color: #257ce6e1; // 滑块活跃颜色
   --verify-success-color: rgba(65, 216, 85, 0.795);
@@ -7,7 +7,12 @@
 
   position: relative;
   line-height: 0;
+  contain: content;
   user-select: none;
+
+  &.verify-container-trigger-hover {
+    contain: style layout;
+  }
 
   &.verify-container-disabled {
     pointer-events: none;
@@ -47,9 +52,9 @@
     }
   }
 
-  .verify-slide-box {
+  .verify-content-box, .verify-check-box {
     position: relative;
-    width: var(--verify-slide-box-width);
+    width: var(--verify-content-box-width);
     background-color: #878787;
   
     // 滑块
@@ -58,8 +63,8 @@
 
       position: relative;
       display: inline-block;
-      width: var(--slide-control-size);
-      height: var(--slide-control-size);
+      width: var(--verify-control-size);
+      height: var(--verify-control-size);
       background-color: var(--verify-slide-control-color);
       cursor: pointer;
       box-shadow: 1px 1px 2px 1px #00000024;
@@ -79,7 +84,7 @@
         content: "";
         position: absolute;
         left: calc(var(--verify-slide-control-x) * -1);
-        right: var(--slide-control-size);
+        right: var(--verify-control-size);
         height: 100%;
         box-shadow: inset 1px 0 var(--verify-slide-control-active-color),
           inset 0 -1px var(--verify-slide-control-active-color),
@@ -107,7 +112,7 @@
       left: 0;
       bottom: 0;
       width: 100%;
-      height: var(--slide-control-size);
+      height: var(--verify-control-size);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -119,7 +124,7 @@
     }
 
     // 移动时状态
-    &.verify-slide-box-slide-active .verify-slide-label {
+    &.verify-content-box-slide-active .verify-slide-label {
       opacity: 0;
     }
 
@@ -162,7 +167,7 @@
     }
 
     // 触发方式为hover的样式
-    &.verify-slide-box-hover {
+    &.verify-content-box-hover {
       height: 30px;
 
       .verify-slide-svg {
@@ -173,10 +178,10 @@
         transition: top .5s ease-in-out, opacity .5s ease-in-out, height .5s ease-in-out;
       }
 
-      &.verify-slide-box-hover-active {
+      &.verify-content-box-hover-active {
         .verify-slide-svg {
-          top: calc(var(--verify-slide-svg-height) * -1);
-          height: var(--verify-slide-svg-height);
+          top: calc(var(--verify-content-box-height) * -1);
+          height: var(--verify-content-box-height);
           opacity: 1;
         }
       }

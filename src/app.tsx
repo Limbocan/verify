@@ -1,6 +1,7 @@
 import { mergeProps } from 'solid-js'
-import type { AppProps } from '../types/props'
+import { AppProps, TriggerType, VerifyType } from '../types/props.d'
 import { TypeSlide } from './type-slide/type-slide'
+import { TypeCheck } from './type-check/type-check'
 import './style.scss'
 import style from './style.scss?inline'
 
@@ -14,11 +15,19 @@ const App = (
   return (
     <>
       { _props.component ? <style>{style}</style> : null }
-      <div class={`verify-container ${(_props.loading || _props.disabled) ? 'verify-container-disabled' : ''}`}>
-        <TypeSlide
-          ref={slideTypeRef}
-          props={_props}
-        />
+      <div
+        class={`
+          verify-container
+          ${(_props.loading || _props.disabled) ? 'verify-container-disabled' : ''}
+          ${_props.trigger === TriggerType.hover ? 'verify-container-trigger-hover' : ''}
+        `}
+      >
+        {
+          _props.type === VerifyType.slide ? <TypeSlide
+            ref={slideTypeRef}
+            props={_props}
+          /> : <TypeCheck props={_props} />
+        }
       </div>
     </>
   )

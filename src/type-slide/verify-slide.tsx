@@ -12,7 +12,7 @@ export const VerifySlide = (props: {
   trigger: TriggerType | undefined,
   loading: boolean,
   disabled: boolean,
-  slideLabel: string,
+  slideLabel?: string,
   children: any
 }) => {
   const _props = mergeProps(props)
@@ -33,8 +33,8 @@ export const VerifySlide = (props: {
   })
 
   // trigger为hover时显示/隐藏box
-  const showBox = () => slidBoxRef.classList.add('verify-slide-box-hover-active')
-  const hiddenBox = () => { if (startTime === 0) slidBoxRef.classList.remove('verify-slide-box-hover-active') }
+  const showBox = () => slidBoxRef.classList.add('verify-content-box-hover-active')
+  const hiddenBox = () => { if (startTime === 0) slidBoxRef.classList.remove('verify-content-box-hover-active') }
 
   // 滑动中事件
   const slideMove = (e: MouseEvent) => {
@@ -56,15 +56,15 @@ export const VerifySlide = (props: {
   const slideEndAfter = (reset: boolean = true): void => {
     if (!reset) return
     startTime = 0
-    slidBoxRef.classList.remove('verify-slide-box-slide-active')
-    slidBoxRef.classList.remove('verify-slide-box-hover-active')
+    slidBoxRef.classList.remove('verify-content-box-slide-active')
+    slidBoxRef.classList.remove('verify-content-box-hover-active')
   }
 
   // 滑动开始事件
   const slideStart = (e: MouseEvent) => {
     startTime = new Date().getTime()
     if (isFirst()) updateStartX(() => e.screenX)
-    slidBoxRef.classList.add('verify-slide-box-slide-active')
+    slidBoxRef.classList.add('verify-content-box-slide-active')
     window.addEventListener('mouseup', slideEnd)
     window.addEventListener('mousemove', slideMove)
   }
@@ -101,10 +101,10 @@ export const VerifySlide = (props: {
   return (
     <div
       ref={slidBoxRef}
-      class={`verify-slide-box ${_props.trigger === TriggerType.insert ? 'verify-slide-box-insert' : 'verify-slide-box-hover'}`}
+      class={`verify-content-box ${_props.trigger === TriggerType.insert ? 'verify-content-box-insert' : 'verify-content-box-hover'}`}
       style={{
-        '--verify-slide-box-width': _props.width + 'px',
-        '--verify-slide-svg-height': _props.height + 'px'
+        '--verify-content-box-width': _props.width + 'px',
+        '--verify-content-box-height': _props.height + 'px'
       }}
     >
       { _props.children }

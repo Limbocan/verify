@@ -21,6 +21,7 @@
 
       const verifyComponent = new Verify({
         component: true, // web-component
+        type: 'check',
         image: './doc/verify.png',
         trigger: 'hover',
         verifyEnd: (next, distance, duration) => {
@@ -37,6 +38,7 @@
         root: document.querySelector('#app'), // dom渲染
         image: './doc/verify.png',
         slideLabel: '自定义文字',
+        type: 'check',
         verifyEnd: (next, distance, duration) => {
           verifyDom.setLoading(true)
           setTimeout(() => {
