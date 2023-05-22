@@ -28,8 +28,10 @@ export const VerifySlide = (props: {
   onMount(() => {
     updateSlideWidth(() => slideRef ? slideRef.getBoundingClientRect().width : 0)
 
-    slidBoxRef.addEventListener('mouseenter', showBox)
-    slidBoxRef.addEventListener('mouseleave', hiddenBox)
+    if (props.trigger === TriggerType.hover) {
+      slidBoxRef.addEventListener('mouseenter', showBox)
+      slidBoxRef.addEventListener('mouseleave', hiddenBox)
+    }
   })
 
   // trigger为hover时显示/隐藏box

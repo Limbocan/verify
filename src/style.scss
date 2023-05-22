@@ -170,16 +170,21 @@
     &.verify-content-box-hover {
       height: 30px;
 
-      .verify-slide-svg {
+      .verify-conent-view {
+        pointer-events: none;
         position: absolute;
         top: 0;
+        left: 0;
+        right: 0;
         opacity: 0;
         height: 0;
-        transition: top .5s ease-in-out, opacity .5s ease-in-out, height .5s ease-in-out;
+        width: 100%;
+        transition: top .3s ease-in-out, opacity .3s ease-in-out, height .3s ease-in-out;
       }
 
       &.verify-content-box-hover-active {
-        .verify-slide-svg {
+        .verify-conent-view {
+          pointer-events: all;
           top: calc(var(--verify-content-box-height) * -1);
           height: var(--verify-content-box-height);
           opacity: 1;

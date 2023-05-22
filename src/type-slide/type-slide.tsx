@@ -69,7 +69,7 @@ export const TypeSlide = (props: { props: AppProps }) => {
       <svg
         width={_props.props.width}
         height={_props.props.height}
-        class="verify-slide-svg"
+        class="verify-conent-view"
       >
         {/* svg变量 */}
         <VerifySvgDefs
