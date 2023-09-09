@@ -16,11 +16,11 @@ const App = (
     <>
       { _props.component ? <style>{style}</style> : null }
       <div
-        class={`
-          verify-container
-          ${(_props.loading || _props.disabled) ? 'verify-container-disabled' : ''}
-          ${_props.trigger === TriggerType.hover ? 'verify-container-trigger-hover' : ''}
-        `}
+        class={[
+          'verify-container',
+          (_props.loading || _props.disabled) ? 'verify-container-disabled' : '',
+          _props.trigger === TriggerType.hover ? 'verify-container-trigger-hover' : '',
+        ].join(' ')}
       >
         {
           _props.type === VerifyType.slide ? <TypeSlide

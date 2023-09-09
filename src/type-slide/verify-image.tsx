@@ -22,10 +22,15 @@ export const VerifyImage = (
       clip-path={_props.clip}
     >
       <div
-        class={`verify-background-image ${_props.loading === true ? 'verify-image-loading' : ''} ${_props.clip ? 'verify-image-clip' : ''}`}
-        style={
-          `background-image: url(${_props.src});${_props.repeat === false ? 'background-repeat: no-repeat' : ''}`
-        }
+        class={[
+          'verify-background-image',
+          _props.loading === true ? 'verify-image-loading' : '',
+          _props.clip ? 'verify-image-clip' : '',
+        ].join(' ')}
+        style={[
+          `background-image: url("${_props.src}")`,
+          _props.repeat === false ? 'background-repeat: no-repeat' : '',
+        ].join(';')}
       ></div>
     </foreignObject>
   )
